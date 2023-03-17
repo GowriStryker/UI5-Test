@@ -1,0 +1,77 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.f"
+	xmlns:viz ="sap.viz.ui5.controls"
+	xmlns:vizFeeds = "sap.viz.ui5.controls.common.feeds"
+	xmlns:cm="sap.suite.ui.commons"
+xmlns:vizData= "sap.viz.ui5.data"
+	xmlns:card="sap.f.cards">
+
+	<Popover placement="Auto" showHeader="false" >
+
+	<!--		<List
+				showSeparators="None"
+				items="{
+					path: 'trackHelp>/'
+				}">
+				<CustomListItem>
+					<HBox alignItems="Center" justifyContent="SpaceBetween">
+						<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
+							<Title level="H3" text="{trackHelp>value}" />
+							<Text text="{trackHelp>value}"	/>	
+						</VBox>
+						<ObjectStatus
+							class="sapUiTinyMargin sapUiSmallMarginEnd"
+							text="{trackHelp>count}"
+							state="Error" />
+					</HBox>
+				</CustomListItem>
+			</List>
+	
+	-->
+		<cm:ChartContainer
+				id="chartContainer"
+				showFullScreen="true"
+				showPersonalization="false"
+				autoAdjustHeight="true"
+			
+				showSelectionDetails="true"
+				
+				title="WRICEF Distribution ">
+				<cm:content>
+					<cm:ChartContainerContent
+						icon="sap-icon://line-chart"
+						title="WRICEF Distribution">
+						<cm:content>
+	<viz:VizFrame  id="idChart" vizType="stacked_column"  uiConfig="{applicationSet:'fiori'}" selectData="onSelect"  deselectData="onDeselect" >
+						<viz:dataset>
+							<vizData:FlattenedDataset data="{test>/items}">
+								<vizData:dimensions>
+									<vizData:DimensionDefinition name="Release" value="{Quarter}"/>
+								</vizData:dimensions>
+								<vizData:measures >
+									<vizData:MeasureDefinition name="OTC" value="{test>OTC}"  />
+									<vizData:MeasureDefinition name="PTP" value="{test>PTP}"/>
+									<vizData:MeasureDefinition name="FTS" value="{test>FTS}" />
+								<vizData:MeasureDefinition name="RTR" value="{test>RTR}"/>
+									<vizData:MeasureDefinition name="MDG" value="{test>MDG}"/>
+									<vizData:MeasureDefinition name="DEV" value="{test>DEV}"/> 
+								</vizData:measures>	
+							</vizData:FlattenedDataset>
+						</viz:dataset>
+						<viz:feeds>
+							<vizFeeds:FeedItem uid="valueAxis" type="Measure" values='OTC,PTP,FTS,RTR,MDG,DEV'/>
+				<!--			<vizFeeds:FeedItem uid="valueAxis" type="Measure" values='Milk Current Year,Sugar Current Year,Tea Current Year, ee ,rr, tt'/>	-->
+					<!--		<vizFeeds:FeedItem uid="valueAxis2" type="Measure" values='Milk Previous Year,Sugar Previous Year,Tea Previous Year'/>	-->
+							<vizFeeds:FeedItem uid="categoryAxis" type="Dimension" values="Release"/>
+						</viz:feeds>
+					</viz:VizFrame>
+						</cm:content>
+					</cm:ChartContainerContent>
+				</cm:content>
+			</cm:ChartContainer>
+			
+	</Popover>		
+
+</core:FragmentDefinition>

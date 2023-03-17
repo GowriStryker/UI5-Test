@@ -1,0 +1,25 @@
+/* Enter your custom styles here */
+.spaceleft {
+
+	margin-left: 1em !important;
+		margin-right: 1em !important;
+}
+
+/* background color */
+.blue_color {
+	background: #2d4863 !important;
+}
+
+/*Text Color */
+.blue_text{
+	color: #2d4863 !important;
+}
+.jsr > div {
+	width : 15rem !important;
+}
+
+.classCustomPad{
+	margin-left:1rem !important;
+	margin-right:1rem !important;
+}
+

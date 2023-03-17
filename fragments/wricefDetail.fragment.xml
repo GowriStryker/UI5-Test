@@ -1,0 +1,32 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:a="sap.m.Avatar" oController="root.controller.View1">
+	<QuickView id="quickView" placement="Auto">
+		<QuickViewPage pageId="PageId123" title="{/RICEF}" description="{/NAME}">
+	
+		<!--		<a:Avatar src="sap-icon://tags" displayShape="Circle"/>	-->
+	
+			<QuickViewGroup>
+				<QuickViewGroupElement label="Team " value="{/TEAM}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="Release " value="{/REL}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="Sub Team " value="{/GRP}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="WRICEF Type " value="{/TYPE}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="WRICEF Sub-Type " value="{/OBJTYP}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="Middleware Complexity " value="{/MW_COMPLEXITY}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="CR " value="{/CR}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="CR Notes " value="{/CR_NOTES}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="RAID " value="{/RAID}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="Source System " value="{/SRCSYS}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="Delivery Notes " value="{/DELIVERY_NOTES}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="Non-SAP Complexity " value="{/NON_SAP_COMPLEXITY}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="SAP Complexity " value="{/SAP_COMPLEXITY}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="Middleware Pattern " value="{/MW_PATTERN}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="Target System " value="{/TARGET_SYSTEM}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="Business Area " value="{/BUSINESS AREA}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="Process Group " value="{/PROCESS_GROUP}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="Business Process :" value="{/BUSINESS_PROCESS}" type="{sap.m.QuickViewGroupElementType.text}"/>
+				<QuickViewGroupElement label="TDS Document Link "  value="Open TDS " type="link" url="{/TDS_URL}"/>
+				<QuickViewGroupElement label="FDS Document Link " value="Open FDS" type="link" url="{/FDS_URL}"/>
+			
+			</QuickViewGroup>
+		</QuickViewPage>
+	</QuickView>
+</core:FragmentDefinition>

@@ -1,0 +1,1 @@
+sap.ui.define(["ZCREATE_WRICEF_ID/ZCREATE_WRICEF_ID/controller/View1.controller"],function(t){"use strict";QUnit.module("View1 Controller");QUnit.test("I should test the View1 controller",function(e){var n=new t;n.onInit();e.ok(n)})});

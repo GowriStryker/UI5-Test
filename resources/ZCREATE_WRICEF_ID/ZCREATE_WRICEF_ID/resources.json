@@ -1,0 +1,73 @@
+{
+    "resources": [
+        {
+            "name": "../../root/model/complexityModel.json"
+        },
+        {
+            "name": "../../root/manifest.json"
+        },
+        {
+            "name": "../../root/i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "../../root/util/formatter.js"
+        },
+        {
+            "name": "../../root/model/models.js"
+        },
+        {
+            "name": "../../root/controller/View1.controller.js"
+        },
+        {
+            "name": "../../root/Component.js"
+        },
+        {
+            "name": "../../root/manifest-bundle.zip"
+        },
+        {
+            "name": "../../root/Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "../../root/util/formatter-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../../root/model/models-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../../root/controller/View1-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "../../root/Component-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../../sap-ui-version.json"
+        },
+        {
+            "name": "neo-app.json"
+        },
+        {
+            "name": "di.code-validation.core_issues.json"
+        },
+        {
+            "name": "../../root/view/View1.view.xml"
+        },
+        {
+            "name": "../../root/fragments/wricefDetail.fragment.xml"
+        },
+        {
+            "name": "../../root/fragments/card.fragment.xml"
+        },
+        {
+            "name": "../../root/css/style.css"
+        },
+        {
+            "name": "../../root/index.html"
+        }
+    ]
+}

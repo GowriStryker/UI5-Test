@@ -1,0 +1,306 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f" xmlns:layout="sap.ui.layout"
+	xmlns:viz="sap.viz.ui5.controls" xmlns:vizFeeds="sap.viz.ui5.controls.common.feeds" xmlns:vizData="sap.viz.ui5.data"
+	controllerName="root.controller.View1" displayBlock="true" height="100%">
+	<f:DynamicPage id="dynamicPageId" preserveHeaderStateOnScroll="true" headerExpanded="true" showFooter="true">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="WRICEF ID Creation Tool"/>
+				</f:heading>
+				<f:expandedContent>
+					<Label text="Search existing WRICEFs or Create new WRICEF ID" class="blue_text"/>
+				</f:expandedContent>
+			<!--	<f:snappedContent>
+					<Label text="Search existing WRICEFs or Create new WRICEF ID" class="blue_text"/>
+				</f:snappedContent>
+				<f:snappedTitleOnMobile>
+					<Title text="Search existing WRICEFs or Create new WRICEF ID" class="blue_text"/>
+				</f:snappedTitleOnMobile> -->
+				<f:content></f:content>
+				<f:actions>
+				<OverflowToolbar>
+					<!--	<GenericTag id="genericTag" text="WRICEF Count" status="Success" press="onPressOpenPopover" design="StatusIconHidden">
+							<ObjectNumber id="totalNumber" number="" unit="" emphasized="false" state="Success"/>
+						</GenericTag> -->
+					</OverflowToolbar>	
+				</f:actions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<FlexBox alignItems="Start" justifyContent="SpaceBetween" width="200%" height="120%">
+					<items>
+						<Panel backgroundDesign="Transparent" class="sapUiNoContentPadding"  >
+							<content>
+								<layout:HorizontalLayout >
+									<RadioButtonGroup id="radioGroup" select="onRadioButton">
+										<RadioButton text="Search Existing WRICEFs" selected="true" id="rbSEARCH"/>
+										<RadioButton text="Create/Extend/Cancel WRICEF ID" id="rbCREATE"/>
+									</RadioButtonGroup>
+									<Input id="searchTerm" class="spaceleft" width="8em" required="true" valueState="Information" placeholder="Search Term"
+										tooltip="This is open search. Search with CR# or Description or RAID# etc.."/>
+								</layout:HorizontalLayout>
+							</content>
+						</Panel>
+					</items>
+				</FlexBox>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<Page id="page" title="CREATE WRICEF ID" floatingFooter="true" showHeader="false" visible="true">
+				<content>
+					<Table id="table" class="margtop" items="{ path: 'searchData>/results', sorter: { path: 'WRICEF_ID' } }" visible="false" growing="true">
+						<columns>
+							<Column mergeDuplicates="true" width="20%">
+								<header>
+									<Text text="WRICEF ID"/>
+								</header>
+							</Column>
+							<Column >
+								<header>
+									<Text text="Release"/>
+								</header>
+							</Column>
+							<Column width="40%">
+								<header>
+									<Text text="Description"/>
+								</header>
+							</Column>
+							<!--	<Column>
+								<header>
+									<Text text="CR #"/>
+								</header>
+							</Column>	-->
+							<Column>
+								<header>
+									<Text text="CR Notes"/>
+								</header>
+							</Column>
+							<!--		<Column>
+								<header>
+									<Text text="RAID #"/>
+								</header>
+							</Column>	-->
+						</columns>
+						<items >
+							<ColumnListItem id="zxc" vAlign="Middle" type="Active" press="wricefPopover">
+								<Text text="{searchData>RICEF}" wrapping="false"/>
+								<Text text="{searchData>REL}" wrapping="false"/>
+								<Text text="{searchData>NAME}" wrapping="true"/>
+								<!--	<Text text="{searchData>CR}"/>	-->
+								<Text text="{searchData>CR_NOTES}"/>
+								<!--	<Text text="{searchData>RAID}"/>	-->
+							</ColumnListItem>
+						</items>
+					</Table>
+					<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" id="form0" visible="false">
+						<sap.ui.layout.form:formContainers>
+							<sap.ui.layout.form:FormContainer id="container0">
+								<sap.ui.layout.form:formElements>
+									<sap.ui.layout.form:FormElement label="" id="element01">
+										<sap.ui.layout.form:fields>
+											<!--		<layout:HorizontalLayout >
+												<CheckBox id="idCreateCheckbox" select="onCreate" text='Create' class='classCustomPad' selected='true'/>
+												<CheckBox id="idExtendCheckbox" select="onExtend" text='Extend' class='classCustomPad'/>
+											</layout:HorizontalLayout>	-->
+											<RadioButtonGroup id="idOperation" valueState="Information" columns="3" select="onOperationChange">
+												<!--  don't change these sequence, controller logic is dependent-->
+												<RadioButton text="Create" selected="true"/>
+												<RadioButton text="Extend"/>
+												<RadioButton text="Cancel"/>
+											</RadioButtonGroup>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="WRICEF ID" id="element00">
+										<sap.ui.layout.form:fields>
+											<ComboBox id="idWricef" placeholder="Select from dropdown" items="{ path: 'ricefsHelp>/', sorter: { path: 'value' } }" width="15em"
+												 change="onExtendWricef" enabled="false">
+												<core:Item key="{ricefsHelp>value}" text="{ricefsHelp>value}"/>
+											</ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="Track" id="element0">
+										<sap.ui.layout.form:fields>
+											<!--	<Input width="20%" id="idTrack" showValueHelp="true" valueHelpOnly="true" required="true" showSuggestion="true"
+													valueHelpRequest="valueHelpTrack"/> -->
+											<ComboBox id="TRACK" placeholder="Select from dropdown" items="{ path: 'trackHelp>/', sorter: { path: 'value' } }" width="15em"
+												required="true" change="onValueChange">
+												<core:Item key="{trackHelp>value}" text="{trackHelp>value}"/>
+											</ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="Sub-Track" id="element1">
+										<sap.ui.layout.form:fields>
+											<!--		<Input width="20%" id="idSubTrack" showValueHelp="true" required="true" 
+										showSuggestion="true" valueHelpRequest="valueHelpTrack"/>	-->
+											<ComboBox id="SUBTRACK" placeholder="Enter or Select from dropdown" items="{ path: 'subTrackHelp>/', sorter: { path: 'value' } }"
+												width="15em" required="true">
+												<core:Item key="{subTrackHelp>value}" text="{subTrackHelp>value}"/>
+											</ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="Description" id="element2">
+										<sap.ui.layout.form:fields>
+											<Input id="DESCRIPTION" placeholder="Enter WRICEF description " width="60%" required="true" maxLength="50"/>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="Impacted Release" id="element3">
+										<sap.ui.layout.form:fields>
+											<MultiComboBox placeholder="Select from dropdown" id="RELEASE" required="true" selectionChange="handleSelectionChange"
+												selectionFinish="handleSelectionFinish" width="15em" items="{ path: 'releaseHelp>/results', sorter: { path: 'Release' } }">
+												<core:Item key="{releaseHelp>Release}" text="{releaseHelp>Release}"/>
+											</MultiComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="WRICEF Type" id="element4">
+										<sap.ui.layout.form:fields>
+											<ComboBox id="WRICEF_TYPE" placeholder="Select from dropdown" items="{ path: 'typeHelp>/', sorter: [{ path: 'value' } ]}" width="15em"
+												required="true" change="onValueChange">
+												<core:Item key="{typeHelp>value}" text="{typeHelp>value}"/>
+											</ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="Reference WRICEF ID" id="idReference" visible="false" class="jsr" >
+										<sap.ui.layout.form:fields>
+											<ComboBox id="REFERENCE_WRICEF" class="jsr" enabled="false" placeholder="Select from dropdown" items="{ path: 'intHelp>/', sorter: { path: 'value' } }"
+												width="15em" required="true" change="onValueChange">
+												<core:Item key="intHelp>value}" text="{intHelp>value}"/>
+											</ComboBox>
+											<!--	<Input id="REFERENCE_WRICEF" class="jsr" width="15rem" placeholder="Enter reference interface WRICEF ID"/> -->
+											<CheckBox id="idRefRicef" select="onRefRicef" text="create new version of existing Interface"/>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="WRICEF Sub-Type" id="element5">
+										<sap.ui.layout.form:fields>
+											<ComboBox id="WRICEF_SUBTYPE" placeholder="Enter or Select from dropdown" items="{ path: 'subTypeHelp>/', sorter: { path: 'value' } }"
+												width="15em" required="true">
+												<core:Item key="{subTypeHelp>value}" text="{subTypeHelp>value}"/>
+											</ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="SAP Complexity" id="element6">
+										<sap.ui.layout.form:fields>
+											<!--<Input width="20%" id="input6"/> -->
+											<ComboBox id="SAP_COMPLEXITY" required="true" placeholder="Select from dropdown"
+												items="{ path: 'complexityModel>/complexity', sorter: { path: 'text' } }" width="15em" change="onValueChange">
+												<core:Item key="{complexityModel>value}" text="{complexityModel>value}"/>
+											</ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="Non-SAP Complexity" id="element7">
+										<sap.ui.layout.form:fields>
+											<ComboBox id="NONSAP_COMPLEXITY" required="true" placeholder="Select from dropdown"
+												items="{ path: 'complexityModel>/complexity', sorter: { path: 'text' } }" width="15em" change="onValueChange">
+												<core:Item key="{complexityModel>value}" text="{complexityModel>value}"/>
+											</ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="Middleware Complexity" id="element8">
+										<sap.ui.layout.form:fields>
+											<ComboBox id="MW_COMPLEXITY" required="true" placeholder="Select from dropdown"
+												items="{ path: 'complexityModel>/complexity', sorter: { path: 'text' } }" width="15em" change="onValueChange">
+												<core:Item key="{complexityModel>value}" text="{complexityModel>value}"/>
+											</ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="CR #">
+										<sap.ui.layout.form:fields>
+											<Input id="CR" width="15em" placeholder="Enter CR# if any.."/>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="RAID #" id="element10">
+										<sap.ui.layout.form:fields>
+											<Input id="RAID" width="15em" placeholder="Enter RAID# if any"/>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="Source System">
+										<sap.ui.layout.form:fields>
+											<ComboBox id="SOURCE_SYSTEM" placeholder="Select from dropdown" editable="false" items="{ path: 'sourceHelp>/', sorter: { path: 'value' } }" width="15em">
+												<core:Item key="{sourceHelp>value}" text="{sourceHelp>value}"  />
+											</ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="Target System">
+										<sap.ui.layout.form:fields>
+											<ComboBox id="TARGET_SYSTEM" placeholder="Select from dropdown" editable= "false" items="{ path: 'targetHelp>/', sorter: { path: 'value' } }" width="15em">
+												<core:Item key="{targetHelp>value}" text="{targetHelp>value}"  />
+											</ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="BPO">
+										<sap.ui.layout.form:fields>
+											<Input id="BPO" width="15em" placeholder="Enter BPO Name.."/>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="Middleware Pattern">
+										<sap.ui.layout.form:fields>
+											<Input id="MIDDLEWARE_PATTERN" width="15em" placeholder="Enter M/W pattern"/>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="Delivery Notes">
+										<sap.ui.layout.form:fields>
+											<Input id="DELIVERY_NOTES" width="60%" placeholder="Enter delivery notes"/>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									
+									<sap.ui.layout.form:FormElement label="Requirement ID">
+										<sap.ui.layout.form:fields>
+											<Input id="REQUIREMENT_ID" width="15em" placeholder="Enter Requirement ID"/>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									
+									
+									<sap.ui.layout.form:FormElement label="IS Approver">
+										<sap.ui.layout.form:fields>
+											<ComboBox id="IS_APPROVER" class="margtop" required="true" showSecondaryValues="true" placeholder="Select from dropdown.."
+												items="{ path: 'ISPOHelp>/results', sorter: { path: 'USER_ID' }, filters: [{ path: 'OWNERSHIP', operator: 'EQ', value1: 'FUNCTIONAL'}] }"
+												width="15em" change="onValueChange">
+												<core:ListItem key="{ISPOHelp>NAME}" text="{ISPOHelp>USER_ID}" additionalText="{ISPOHelp>NAME}"/>
+											</ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="">
+										<sap.ui.layout.form:fields>
+											<ComboBox class="margtop" visible="false" width="15em"></ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="">
+										<sap.ui.layout.form:fields>
+											<ComboBox class="margtop" visible="false" width="15em"></ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="">
+										<sap.ui.layout.form:fields>
+											<ComboBox class="margtop" visible="false" width="15em"></ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="">
+										<sap.ui.layout.form:fields>
+											<ComboBox class="margtop" visible="false" width="15em"></ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<sap.ui.layout.form:FormElement label="">
+										<sap.ui.layout.form:fields>
+											<ComboBox class="margtop" visible="false" width="15em"></ComboBox>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+								</sap.ui.layout.form:formElements>
+							</sap.ui.layout.form:FormContainer>
+						</sap.ui.layout.form:formContainers>
+						<sap.ui.layout.form:layout>
+							<sap.ui.layout.form:ResponsiveGridLayout id="layout0"/>
+						</sap.ui.layout.form:layout>
+					</sap.ui.layout.form:Form>
+				</content>
+			</Page>
+		</f:content>
+		<f:footer >
+			<OverflowToolbar class="blue_color">
+				<MessageStrip id="statusText" type="Error" text="" enableFormattedText="true" showIcon="true" showCloseButton="false" visible="false"></MessageStrip>
+				<ToolbarSpacer/>
+				<Button type="Accept" text="Search" icon="sap-icon://search" press="onSubmit" id="F8"/>
+				<Button type="Reject" text="Cancel"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>
